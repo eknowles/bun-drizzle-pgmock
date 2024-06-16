@@ -1,0 +1,23 @@
+services:
+  db:
+    image: kartoza/postgis:14-3.1
+    volumes:
+      - postgis-data:/var/lib/postgresql
+      - dbbackups:/backups
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_USER=test
+      - POSTGRES_PASS=test
+      - ALLOW_IP_RANGE=0.0.0.0/0
+      - RUN_AS_ROOT=true
+    ports:
+      - target: 5432
+        published: 15432
+        protocol: tcp
+    restart: on-failure
+
+volumes:
+  dbbackups:
+    driver: local
+  postgis-data:
+    driver: local
